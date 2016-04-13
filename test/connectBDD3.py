@@ -21,9 +21,13 @@ import subprocess
 import fileinput
 
 
-with open('sortieISOGEO_final.json','w+') as output:
-    subprocess.call(["python", "./sortieISOGEOV2.py"], stdout=output);
-print "REUSSI"
+#with open('sortieISOGEO_final.json','w+') as output:
+#    subprocess.call(["python", "./sortieISOGEOV2.py"], stdout=output);
+#print "REUSSI"
+
+os.remove('sortieISOGEO.py')
+os.remove('sortieISOGEOV2.py')
+
 
 
 #connectBDD3 = ETAPE 3 #

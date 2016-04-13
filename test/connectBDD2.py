@@ -19,9 +19,11 @@ import requests
 import subprocess
 import fileinput
 
+# Permet d'enregistrer la sortie terminal de connectBDD
 with open('sortieISOGEO.py','w+') as output:
     subprocess.call(["python", "./connectBDD.py"], stdout=output);
 
+#Remplace l'erreur 4 du premier fichier de sortie
 f = open('sortieISOGEO.py','r')
 filedata = f.read()
 f.close()
@@ -34,6 +36,12 @@ f.close()
 
 subprocess.call(["python", "sortieISOGEOV2.py"], shell=None)
 
-#connectBDD2 = ETAPE 2 #
-# Permet d'enregistrer la sortie terminal de connectBDD
-# Permet d'executer la sortie terminal sortieISOGEO.py #
+
+# Permet d'enregistrer la sortie finale en .json #
+with open('sortieISOGEO_final.json','w+') as output:
+    subprocess.call(["python", "./sortieISOGEOV2.py"], stdout=output);
+print "REUSSI"
+
+
+os.remove('sortieISOGEO.py')
+os.remove('sortieISOGEOV2.py')
