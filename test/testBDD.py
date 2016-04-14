@@ -8,55 +8,33 @@ import psycopg2
 import psycopg2.extras
 import sys
 
+#### RECUPERATION DES FORMATS#####
 
 con = None
 
 try:
     
-    con = psycopg2.connect("dbname='chimn' user='postgres'")
+    con = psycopg2.connect("dbname='chimn' user='postgres'") #Connexion à la BDD
     
+    nt_cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    nt_cur.execute("SELECT nom FROM preferenceformat WHERE activated = 'True'") #requête SQL formats
+        
+    firstResultFormat = nt_cur.fetchmany(6)
+        
+    print firstResultFormat
+    
+    resultFormat = firstResultFormat
+
+
+#### RECUPERATION DES SRS#####
     cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("SELECT * FROM preferenceformat WHERE activated = 'True'")
-    
-    while True:
+    cursor.execute("SELECT code FROM preferencesrs WHERE preferencesrs.activate='True'") #requête SQL SRS
         
-        row = cursor.fetchone()
-        
-        if row == None:
-            break
-        
-        print row[0], row[1]
+    firestResultSRS = cursor.fetchmany(3)
 
 
-except psycopg2.DatabaseError, e:
-    print 'Error %s' % e
-    sys.exit(1)
-
-
-finally:
-    
-    if con:
-        con.close()
-
-
-con = None
-
-try:
-    
-    con = psycopg2.connect("dbname='chimn' user='postgres'")
-    
-    cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("SELECT * FROM preferencesrs WHERE preferencesrs.activate='True'")
-    
-    while True:
-        
-        row = cursor.fetchone()
-        
-        if row == None:
-            break
-        
-        print row[0], row[1]
-
+    print firestResultSRS
+    resultSRS = firestResultSRS
 
 except psycopg2.DatabaseError, e:
     print 'Error %s' % e
